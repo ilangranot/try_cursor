@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+/* Prevent horizontal overflow on media and potentially wide elements */
+img, video, iframe, embed, object, svg {
+    max-width: 100%;
+    height: auto;
+}
+
 :root {
     --primary-color: #6366f1;
     --primary-dark: #4f46e5;
@@ -18,18 +24,28 @@
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background-color: var(--bg-primary);
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Navigation */
@@ -957,6 +973,98 @@ body {
     text-align: center;
 }
 
+/* Mobile-specific fixes */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .navbar .container {
+        padding: 1rem 16px;
+    }
+    
+    .hero {
+        padding: 100px 16px 60px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .extension-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .extension-install {
+        padding: 2rem 1.5rem;
+    }
+    
+    .features-grid {
+        gap: 1.5rem;
+    }
+    
+    .feature-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .about-content {
+        gap: 2rem;
+    }
+    
+    .contact-form {
+        padding: 0;
+    }
+    
+    /* Fix orbs for mobile */
+    .gradient-orb,
+    .extension-orb {
+        display: none;
+    }
+    
+    .step {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+}
+
+/* iPhone Landscape and small tablets */
+@media (max-width: 926px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 100px 20px 60px;
+    }
+    
+    .extension {
+        padding: 60px 0;
+    }
+    
+    .features {
+        padding: 60px 0;
+    }
+    
+    .about {
+        padding: 60px 0;
+    }
+    
+    .contact {
+        padding: 60px 0;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {
@@ -1031,6 +1139,95 @@ body {
 
     .btn {
         width: 100%;
+    }
+    
+    .container {
+        padding: 0 16px;
+    }
+    
+    .navbar .container {
+        padding: 1rem 16px;
+    }
+    
+    /* Ensure no horizontal overflow */
+    * {
+        max-width: 100%;
+    }
+    
+    img, video, iframe {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Fix any potential overflow issues */
+    .hero-background,
+    .extension-background {
+        overflow: hidden;
+    }
+    
+    .gradient-orb.orb-1 {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .gradient-orb.orb-2 {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .gradient-orb.orb-3 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .extension-orb.orb-1 {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .extension-orb.orb-2 {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .extension-orb.orb-3 {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Extra small devices (iPhone SE, etc.) */
+@media (max-width: 375px) {
+    .container {
+        padding: 0 12px;
+    }
+    
+    .navbar .container {
+        padding: 0.75rem 12px;
+    }
+    
+    .hero {
+        padding: 90px 12px 50px;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .extension-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .extension-install {
+        padding: 1.5rem 1rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem 1rem;
     }
 }
 
