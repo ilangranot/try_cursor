@@ -191,3 +191,135 @@ window.addEventListener('scroll', () => {
         }
     });
 });
+
+// WhatsApp Summaries Functionality
+const API_BASE_URL = 'http://localhost:3000/api'; // Change to your server URL in production
+
+async function loadSummaries() {
+    const summariesList = document.getElementById('summariesList');
+    const noSummaries = document.getElementById('noSummaries');
+    const statusEl = document.getElementById('summariesStatus');
+    
+    try {
+        statusEl.textContent = 'Loading summaries...';
+        
+        // In production, replace with your actual API URL
+        const response = await fetch(`${API_BASE_URL}/summaries`);
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch summaries');
+        }
+        
+        const summaries = await response.json();
+        
+        if (summaries.length === 0) {
+            summariesList.style.display = 'none';
+            noSummaries.style.display = 'block';
+            statusEl.textContent = 'No summaries found';
+        } else {
+            summariesList.style.display = 'grid';
+            noSummaries.style.display = 'none';
+            statusEl.textContent = `${summaries.length} summary${summaries.length !== 1 ? 'ies' : ''} found`;
+            
+            summariesList.innerHTML = summaries.map(summary => `
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-contact">
+                            <span class="summary-icon">💬</span>
+                            <div>
+                                <h4>${escapeHtml(summary.contactName)}</h4>
+                                <p class="summary-meta">${formatDate(summary.createdAt)} • ${summary.messageCount} messages</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-content">
+                        <p>${escapeHtml(summary.summary.substring(0, 200))}${summary.summary.length > 200 ? '...' : ''}</p>
+                    </div>
+                    <div class="summary-actions">
+                        <a href="${API_BASE_URL}/summaries/${summary.id}/download" class="btn btn-primary btn-sm" download>
+                            <span>⬇️</span> Download
+                        </a>
+                        <button class="btn btn-secondary btn-sm" onclick="viewSummary('${summary.id}')">
+                            <span>👁️</span> View Full
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    } catch (error) {
+        console.error('Error loading summaries:', error);
+        statusEl.textContent = 'Unable to connect to server. Make sure the bot is running.';
+        summariesList.style.display = 'none';
+        noSummaries.style.display = 'block';
+        noSummaries.innerHTML = `
+            <p>⚠️ Cannot connect to the bot server.</p>
+            <p>Make sure the WhatsApp bot is running on port 3000.</p>
+            <p>See setup instructions below.</p>
+        `;
+    }
+}
+
+async function viewSummary(id) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/summaries/${id}`);
+        const summary = await response.json();
+        
+        // Create modal to display full summary
+        const modal = document.createElement('div');
+        modal.className = 'summary-modal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${escapeHtml(summary.contactName)}</h3>
+                    <button class="modal-close" onclick="this.closest('.summary-modal').remove()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-meta">
+                        <p><strong>Date:</strong> ${formatDate(summary.createdAt)}</p>
+                        <p><strong>Messages:</strong> ${summary.messageCount}</p>
+                        <p><strong>Phone:</strong> ${escapeHtml(summary.phoneNumber)}</p>
+                    </div>
+                    <div class="modal-summary">
+                        <h4>Summary:</h4>
+                        <p>${escapeHtml(summary.summary)}</p>
+                    </div>
+                    <div class="modal-actions">
+                        <a href="${API_BASE_URL}/summaries/${summary.id}/download" class="btn btn-primary" download>
+                            <span>⬇️</span> Download as Text File
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    } catch (error) {
+        console.error('Error loading summary:', error);
+        alert('Failed to load summary details.');
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// Initialize summaries when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const refreshBtn = document.getElementById('refreshSummaries');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadSummaries);
+        loadSummaries();
+    }
+});

@@ -16,6 +16,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#extension">Extension</a></li>
+                <li><a href="#summaries">Summaries</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -207,6 +208,114 @@
                             <div class="step-icon">🔑</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="summaries" class="summaries">
+        <div class="container">
+            <div class="summaries-header">
+                <h2 class="section-title">WhatsApp Conversation Summaries</h2>
+                <p class="summaries-subtitle">Download AI-generated summaries of your WhatsApp conversations</p>
+            </div>
+            
+            <div class="summaries-content">
+                <div class="summaries-info">
+                    <div class="summaries-icon">💬</div>
+                    <h3>AI-Powered Summaries</h3>
+                    <p>Our WhatsApp bot automatically creates intelligent summaries of your conversations. Get key points, decisions, and important information in a concise format.</p>
+                    
+                    <div class="summaries-features">
+                        <div class="summary-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Automatic summarization every 20 messages</span>
+                        </div>
+                        <div class="summary-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Manual summary with /summary command</span>
+                        </div>
+                        <div class="summary-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Download summaries as text files</span>
+                        </div>
+                        <div class="summary-feature">
+                            <span class="feature-check">✓</span>
+                            <span>Full conversation history included</span>
+                        </div>
+                    </div>
+                    
+                    <div class="summaries-setup">
+                        <h4>How to Use:</h4>
+                        <ol class="setup-steps">
+                            <li>Set up the WhatsApp bot (see instructions below)</li>
+                            <li>Start chatting with the bot on WhatsApp</li>
+                            <li>Send <code>/summary</code> to generate a summary</li>
+                            <li>Download your summaries from this page</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="summaries-list-container">
+                    <div class="summaries-controls">
+                        <button id="refreshSummaries" class="btn btn-secondary">
+                            <span>🔄</span> Refresh
+                        </button>
+                        <div class="summaries-status" id="summariesStatus">Loading summaries...</div>
+                    </div>
+                    
+                    <div id="summariesList" class="summaries-list">
+                        <!-- Summaries will be loaded here -->
+                    </div>
+                    
+                    <div id="noSummaries" class="no-summaries" style="display: none;">
+                        <p>📭 No summaries available yet.</p>
+                        <p>Start using the WhatsApp bot to generate summaries!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bot-setup-section">
+                <h3>🤖 Bot Setup Instructions</h3>
+                <div class="setup-content">
+                    <div class="setup-step">
+                        <div class="step-number-large">1</div>
+                        <div class="step-content-large">
+                            <h4>Install Dependencies</h4>
+                            <pre><code>cd whatsapp-bot
+npm install</code></pre>
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <div class="step-number-large">2</div>
+                        <div class="step-content-large">
+                            <h4>Configure Environment</h4>
+                            <p>Create a <code>.env</code> file with your OpenAI API key:</p>
+                            <pre><code>OPENAI_API_KEY=your_api_key_here
+WEBSITE_URL=https://ilangranot.github.io/try_cursor
+PORT=3000</code></pre>
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <div class="step-number-large">3</div>
+                        <div class="step-content-large">
+                            <h4>Start the Bot</h4>
+                            <pre><code>npm start</code></pre>
+                            <p>Scan the QR code with your WhatsApp to connect.</p>
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <div class="step-number-large">4</div>
+                        <div class="step-content-large">
+                            <h4>Start Summarizing</h4>
+                            <p>Chat with the bot and send <code>/summary</code> to generate summaries!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="setup-links">
+                    <a href="https://github.com/ilangranot/try_cursor/tree/main/whatsapp-bot" target="_blank" class="btn btn-primary">
+                        📚 View Full Documentation
+                    </a>
                 </div>
             </div>
         </div>
